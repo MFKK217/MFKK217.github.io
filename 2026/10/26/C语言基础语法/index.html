@@ -1,0 +1,546 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C语言基础语法 | MFKK的博客</title><meta name="author" content="MFKK"><meta name="copyright" content="MFKK"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="按 OJ 刷题顺序整理的 C 语言最基础语法：输入输出、变量定义、类型转换、算术表达式，配经典入门题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言基础语法">
+<meta property="og:url" content="https://mfkk217.github.io/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="MFKK的博客">
+<meta property="og:description" content="按 OJ 刷题顺序整理的 C 语言最基础语法：输入输出、变量定义、类型转换、算术表达式，配经典入门题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mfkk217.github.io/img/cover.png">
+<meta property="article:published_time" content="2026-10-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-26T02:39:34.571Z">
+<meta property="article:author" content="MFKK">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="编程入门">
+<meta property="article:tag" content="刷题笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mfkk217.github.io/img/cover.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C语言基础语法",
+  "url": "https://mfkk217.github.io/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/",
+  "image": "https://mfkk217.github.io/img/cover.png",
+  "datePublished": "2026-10-26T02:00:00.000Z",
+  "dateModified": "2026-10-26T02:39:34.571Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "MFKK",
+      "url": "https://mfkk217.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mfkk217.github.io/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C语言基础语法',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="bg-animation" id="web_bg" style="background-color: #DFF3FC;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">MFKK的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">C语言基础语法</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">C语言基础语法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-26T02:00:00.000Z" title="发表于 2026-10-26 10:00:00">2026-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-26T02:39:34.571Z" title="更新于 2026-10-26 10:39:34">2026-10-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>::: tip<br>按「编程基础之输入输出 → 变量定义赋值及转换 → 算术表达式与顺序执行」这条刷题路线整理。<br>只讲<strong>入门阶段真正用得到</strong>的东西，指针数组那些后面单独写。<br>:::</p>
+<h2 id="一、第一个程序"><a href="#一、第一个程序" class="headerlink" title="一、第一个程序"></a>一、第一个程序</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拆开看：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>#include &lt;stdio.h&gt;</code></td>
+<td>引入标准输入输出库，要用 <code>printf</code> &#x2F; <code>scanf</code> 就必须有</td>
+</tr>
+<tr>
+<td><code>int main()</code></td>
+<td>主函数，程序从这里开始，<strong>每个程序必须有且仅有一个</strong></td>
+</tr>
+<tr>
+<td><code>&#123; &#125;</code></td>
+<td>函数体，代码都写在里面</td>
+</tr>
+<tr>
+<td><code>printf(...)</code></td>
+<td>输出到屏幕</td>
+</tr>
+<tr>
+<td><code>return 0</code></td>
+<td>程序结束，0 表示正常</td>
+</tr>
+<tr>
+<td><code>;</code></td>
+<td><strong>语句结尾必须有分号</strong>，新手第一大坑</td>
+</tr>
+</tbody></table>
+<p>::: warning<br>OJ 题目经常要求「<strong>不要输出多余内容</strong>」。<br>如果题目说输出 <code>Hello, World!</code>，那就一个字不多一个字不少，别自己加 <code>printf(&quot;请输入...&quot;)</code> 之类的提示语。<br>:::</p>
+<hr>
+<h2 id="二、数据类型与存储空间"><a href="#二、数据类型与存储空间" class="headerlink" title="二、数据类型与存储空间"></a>二、数据类型与存储空间</h2><h3 id="常用类型"><a href="#常用类型" class="headerlink" title="常用类型"></a>常用类型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>    a;      <span class="comment">// 整数</span></span><br><span class="line"><span class="type">char</span>   c;      <span class="comment">// 单个字符</span></span><br><span class="line"><span class="type">float</span>  f;      <span class="comment">// 单精度小数</span></span><br><span class="line"><span class="type">double</span> d;      <span class="comment">// 双精度小数（更精确，默认用它）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="用-sizeof-查看占几个字节"><a href="#用-sizeof-查看占几个字节" class="headerlink" title="用 sizeof 查看占几个字节"></a>用 sizeof 查看占几个字节</h3><p>这是 OJ 高频题（「整型数据类型存储空间大小」）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>), <span class="keyword">sizeof</span>(<span class="type">short</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="type">float</span>), <span class="keyword">sizeof</span>(<span class="type">double</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>常见结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>char</code></td>
+<td>1 字节</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>2 字节</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>4 字节</td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td>8 字节</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>4 字节</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8 字节</td>
+</tr>
+</tbody></table>
+<p>::: tip<br><code>sizeof</code> 后面跟类型要加括号 <code>sizeof(int)</code>，跟变量可以不加 <code>sizeof a</code>。<br>统一加括号最省事。<br>:::</p>
+<h3 id="取值范围"><a href="#取值范围" class="headerlink" title="取值范围"></a>取值范围</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大概范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int</code></td>
+<td>±21 亿</td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td>±9.2×10¹⁸</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>6~7 位有效数字</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>15~16 位有效数字</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>数超过 21 亿要用 <code>long long</code>，对应格式符 <code>%lld</code>。</p>
+</blockquote>
+<hr>
+<h2 id="三、变量定义与赋值"><a href="#三、变量定义与赋值" class="headerlink" title="三、变量定义与赋值"></a>三、变量定义与赋值</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a;              <span class="comment">// 定义，值不确定（垃圾值）</span></span><br><span class="line"><span class="type">int</span> b = <span class="number">10</span>;         <span class="comment">// 定义 + 初始化（推荐）</span></span><br><span class="line"><span class="type">int</span> c, d;           <span class="comment">// 同时定义多个</span></span><br><span class="line"><span class="type">double</span> x = <span class="number">3.14</span>;</span><br><span class="line"><span class="type">char</span> ch = <span class="string">&#x27;A&#x27;</span>;      <span class="comment">// 字符用单引号</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>命名规则：</strong></p>
+<ul>
+<li>只能字母、数字、下划线</li>
+<li><strong>不能以数字开头</strong>：<code>int 2a;</code> ❌</li>
+<li>区分大小写</li>
+</ul>
+<p>::: warning<br><strong>局部变量不赋值就是垃圾值</strong>，直接拿来算会出随机结果。<br>累加求和一定要写 <code>int sum = 0;</code><br>:::</p>
+<h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">5</span>;        <span class="comment">// 赋值</span></span><br><span class="line">a = a + <span class="number">1</span>;    <span class="comment">// 自增</span></span><br><span class="line">a += <span class="number">1</span>;       <span class="comment">// 简写，等价上面</span></span><br><span class="line">a -= <span class="number">2</span>;  a *= <span class="number">3</span>;  a /= <span class="number">2</span>;  a %= <span class="number">3</span>;   <span class="comment">// 同理</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="交换两个变量"><a href="#交换两个变量" class="headerlink" title="交换两个变量"></a>交换两个变量</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> t;</span><br><span class="line">t = a;</span><br><span class="line">a = b;</span><br><span class="line">b = t;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、类型转换"><a href="#四、类型转换" class="headerlink" title="四、类型转换"></a>四、类型转换</h2><h3 id="自动转换（隐式）"><a href="#自动转换（隐式）" class="headerlink" title="自动转换（隐式）"></a>自动转换（隐式）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="type">double</span> b = a;      <span class="comment">// int → double，自动转，b = 5.0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>运算时的规则</strong>：小类型自动往大类型靠。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> / <span class="number">2</span>        <span class="comment">// 结果是 2（两个整数，结果还是整数）</span></span><br><span class="line"><span class="number">5.0</span> / <span class="number">2</span>      <span class="comment">// 结果是 2.5（有小数参与，结果变小数）</span></span><br><span class="line"><span class="number">5</span> / <span class="number">2.0</span>      <span class="comment">// 2.5</span></span><br></pre></td></tr></table></figure>
+
+<p>::: danger<br><strong>整数除法是新手第一大坑！</strong><br><code>int a = 7, b = 2; a / b</code> 得 <strong>3</strong>，不是 3.5，小数部分直接丢掉。</p>
+<p>想保留小数就这么写：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> c = a * <span class="number">1.0</span> / b;    <span class="comment">// ✅ 乘 1.0 把类型抬上去</span></span><br></pre></td></tr></table></figure>
+<p>:::</p>
+<h3 id="强制转换（显式）"><a href="#强制转换（显式）" class="headerlink" title="强制转换（显式）"></a>强制转换（显式）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> x = <span class="number">3.7</span>;</span><br><span class="line"><span class="type">int</span> y = (<span class="type">int</span>)x;        <span class="comment">// y = 3，直接截断，不四舍五入</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">7</span>, b = <span class="number">2</span>;</span><br><span class="line"><span class="type">double</span> c = (<span class="type">double</span>)a / b;   <span class="comment">// 3.5 ✅</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>格式</strong>：<code>(目标类型)变量或表达式</code></p>
+<h3 id="取余运算"><a href="#取余运算" class="headerlink" title="取余运算"></a>取余运算</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span> % <span class="number">3</span>      <span class="comment">// 1（7 除以 3 余 1）</span></span><br><span class="line"><span class="number">10</span> % <span class="number">5</span>     <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>%</code> <strong>只能用于整数</strong>，浮点数取余要用 <code>fmod()</code>（需要 <code>&lt;math.h&gt;</code>）。</p>
+</blockquote>
+<p><strong>取余的经典用法：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n = <span class="number">1234</span>;</span><br><span class="line"><span class="type">int</span> ge  = n % <span class="number">10</span>;        <span class="comment">// 个位 4</span></span><br><span class="line"><span class="type">int</span> shi = n / <span class="number">10</span> % <span class="number">10</span>;   <span class="comment">// 十位 3</span></span><br><span class="line"><span class="type">int</span> bai = n / <span class="number">100</span> % <span class="number">10</span>;  <span class="comment">// 百位 2</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、输入与输出"><a href="#五、输入与输出" class="headerlink" title="五、输入与输出"></a>五、输入与输出</h2><h3 id="printf-输出"><a href="#printf-输出" class="headerlink" title="printf 输出"></a>printf 输出</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;结果是：%d\n&quot;</span>, a);</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>格式符</th>
+<th>对应类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>%d</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>%lld</code></td>
+<td><code>long long</code></td>
+</tr>
+<tr>
+<td><code>%c</code></td>
+<td><code>char</code></td>
+</tr>
+<tr>
+<td><code>%f</code></td>
+<td><code>float</code> &#x2F; <code>double</code></td>
+</tr>
+<tr>
+<td><code>%.2f</code></td>
+<td>保留 2 位小数</td>
+</tr>
+<tr>
+<td><code>%s</code></td>
+<td>字符串</td>
+</tr>
+<tr>
+<td><code>%%</code></td>
+<td>输出一个 <code>%</code></td>
+</tr>
+</tbody></table>
+<h3 id="scanf-输入"><a href="#scanf-输入" class="headerlink" title="scanf 输入"></a>scanf 输入</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a);        <span class="comment">// ⚠️ 必须加 &amp;</span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> d;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;d);       <span class="comment">// ⚠️ double 输入用 %lf</span></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;n);</span><br></pre></td></tr></table></figure>
+
+<p>::: danger<br><strong><code>scanf</code> 忘写 <code>&amp;</code> 是最经典的错误</strong>，程序会崩溃或读到乱码。<br>:::</p>
+<h3 id="格式符对照记忆"><a href="#格式符对照记忆" class="headerlink" title="格式符对照记忆"></a>格式符对照记忆</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>scanf</th>
+<th>printf</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int</code></td>
+<td><code>%d</code></td>
+<td><code>%d</code></td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td><code>%lld</code></td>
+<td><code>%lld</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>%f</code></td>
+<td><code>%f</code></td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td><strong><code>%lf</code></strong></td>
+<td><strong><code>%f</code></strong></td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td><code>%c</code></td>
+<td><code>%c</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <code>double</code> 的 scanf 是 <code>%lf</code>、printf 是 <code>%f</code>，这俩不统一是历史遗留，硬记。</p>
+</blockquote>
+<h3 id="一次读多个值"><a href="#一次读多个值" class="headerlink" title="一次读多个值"></a>一次读多个值</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a, b;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);      <span class="comment">// 输入：3 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输入逗号分隔：3,5</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d,%d&quot;</span>, &amp;a, &amp;b);      <span class="comment">// 格式串里写什么，输入就得是什么</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符输入输出"><a href="#字符输入输出" class="headerlink" title="字符输入输出"></a>字符输入输出</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> c;</span><br><span class="line">c = getchar();      <span class="comment">// 读一个字符</span></span><br><span class="line"><span class="built_in">putchar</span>(c);         <span class="comment">// 输出一个字符</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、格式化输出（OJ-高频）"><a href="#六、格式化输出（OJ-高频）" class="headerlink" title="六、格式化输出（OJ 高频）"></a>六、格式化输出（OJ 高频）</h2><h3 id="保留小数位数"><a href="#保留小数位数" class="headerlink" title="保留小数位数"></a>保留小数位数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> x = <span class="number">3.14159</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, x);      <span class="comment">// 3.14（自动四舍五入）</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.0f\n&quot;</span>, x);      <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="控制宽度与对齐"><a href="#控制宽度与对齐" class="headerlink" title="控制宽度与对齐"></a>控制宽度与对齐</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d\n&quot;</span>, <span class="number">42</span>);      <span class="comment">// 宽度 5，右对齐 → &quot;   42&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-5d|\n&quot;</span>, <span class="number">42</span>);    <span class="comment">// 宽度 5，左对齐 → &quot;42   |&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%05d\n&quot;</span>, <span class="number">42</span>);     <span class="comment">// 补零     → &quot;00042&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5.2f\n&quot;</span>, <span class="number">3.1</span>);   <span class="comment">// 宽度 5 保留 2 位 → &quot; 3.10&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;第一行\n&quot;</span>);       <span class="comment">// \n 是换行</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a\tb\n&quot;</span>);         <span class="comment">// \t 是制表符（Tab）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="经典题：对齐输出"><a href="#经典题：对齐输出" class="headerlink" title="经典题：对齐输出"></a>经典题：对齐输出</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a, b, c;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%8d %8d %8d\n&quot;</span>, a, b, c);   <span class="comment">// 每个占 8 字符宽，右对齐</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、算术表达式与顺序执行"><a href="#七、算术表达式与顺序执行" class="headerlink" title="七、算术表达式与顺序执行"></a>七、算术表达式与顺序执行</h2><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+  -  *  /  %        <span class="comment">// 加减乘除取余</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>优先级</strong>（和数学一样）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">先 * / %，后 + -，括号最优先</span><br></pre></td></tr></table></figure>
+
+<p>拿不准就加括号，别背优先级。</p>
+<h3 id="自增自减"><a href="#自增自减" class="headerlink" title="自增自减"></a>自增自减</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">5</span>;</span><br><span class="line">i++;      <span class="comment">// i 变成 6</span></span><br><span class="line">++i;      <span class="comment">// i 变成 6</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = i++;   <span class="comment">// 先用后加：a = 5, i = 6</span></span><br><span class="line"><span class="type">int</span> b = ++i;   <span class="comment">// 先加后用：i = 7, b = 7</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>口诀：**<code>++</code> 在前先加，在后后加**。初学阶段单独写 <code>i++;</code> 最安全。</p>
+</blockquote>
+<h3 id="顺序执行"><a href="#顺序执行" class="headerlink" title="顺序执行"></a>顺序执行</h3><p>程序<strong>从上往下一行行执行</strong>，没有跳转就是顺序结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a, b;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);   <span class="comment">// 1. 先读输入</span></span><br><span class="line"><span class="type">int</span> sum = a + b;          <span class="comment">// 2. 再算</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, sum);      <span class="comment">// 3. 最后输出</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常用数学函数（需-）"><a href="#常用数学函数（需-）" class="headerlink" title="常用数学函数（需 &lt;math.h&gt;）"></a>常用数学函数（需 <code>&lt;math.h&gt;</code>）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sqrt</span>(x);        <span class="comment">// 平方根</span></span><br><span class="line"><span class="built_in">pow</span>(x, y);      <span class="comment">// x 的 y 次方</span></span><br><span class="line"><span class="built_in">fabs</span>(x);        <span class="comment">// 绝对值（浮点）</span></span><br><span class="line"><span class="built_in">abs</span>(n);         <span class="comment">// 绝对值（整数，在 stdlib.h）</span></span><br><span class="line">round(x);       <span class="comment">// 四舍五入</span></span><br><span class="line"><span class="built_in">ceil</span>(x);        <span class="comment">// 向上取整</span></span><br><span class="line"><span class="built_in">floor</span>(x);       <span class="comment">// 向下取整</span></span><br></pre></td></tr></table></figure>
+
+<p>::: warning<br>编译时要链接数学库：<code>gcc test.c -o test -lm</code><br>（OJ 平台一般自动处理，本地跑可能报错）<br>:::</p>
+<hr>
+<h2 id="八、新手最常踩的-8-个坑"><a href="#八、新手最常踩的-8-个坑" class="headerlink" title="八、新手最常踩的 8 个坑"></a>八、新手最常踩的 8 个坑</h2><table>
+<thead>
+<tr>
+<th>#</th>
+<th>坑</th>
+<th>后果</th>
+<th>怎么避</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>忘写分号 <code>;</code></td>
+<td>编译失败</td>
+<td>每条语句结尾检查</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>scanf</code> 忘加 <code>&amp;</code></td>
+<td>崩溃 &#x2F; 乱码</td>
+<td>除了数组都要加</td>
+</tr>
+<tr>
+<td>3</td>
+<td>整数除法</td>
+<td><code>7/2</code> 得 3 不是 3.5</td>
+<td>写 <code>a * 1.0 / b</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>double</code> 用错格式符</td>
+<td>输出 0 或乱码</td>
+<td>scanf 用 <code>%lf</code>，printf 用 <code>%f</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>变量没初始化</td>
+<td>垃圾值</td>
+<td>定义时就赋初值</td>
+</tr>
+<tr>
+<td>6</td>
+<td>多输出了提示语</td>
+<td>OJ 判错</td>
+<td>题目要什么输出什么</td>
+</tr>
+<tr>
+<td>7</td>
+<td>数太大溢出</td>
+<td>结果变负</td>
+<td>超过 21 亿用 <code>long long</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>中英文符号混用</td>
+<td>编译失败</td>
+<td>分号引号都用英文的</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="九、经典入门题速刷"><a href="#九、经典入门题速刷" class="headerlink" title="九、经典入门题速刷"></a>九、经典入门题速刷</h2><h3 id="1-A-B-问题"><a href="#1-A-B-问题" class="headerlink" title="1. A + B 问题"></a>1. A + B 问题</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a, b;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, a + b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-温度转换（摄氏-→-华氏）"><a href="#2-温度转换（摄氏-→-华氏）" class="headerlink" title="2. 温度转换（摄氏 → 华氏）"></a>2. 温度转换（摄氏 → 华氏）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">double</span> c, f;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;c);</span><br><span class="line">    f = c * <span class="number">9</span> / <span class="number">5</span> + <span class="number">32</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, f);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>::: warning<br><code>c * 9 / 5</code> 里 <code>9 / 5</code> 如果写成整数除法会出错吗？<br>不会——因为 <code>c</code> 是 <code>double</code>，<code>c * 9</code> 已经是小数，再 <code>/ 5</code> 也是小数运算。<br>但如果写成 <code>9 / 5 * c</code> 就错了，<code>9 / 5</code> 先算得 1。<br>:::</p>
+<h3 id="3-计算三角形面积（海伦公式）"><a href="#3-计算三角形面积（海伦公式）" class="headerlink" title="3. 计算三角形面积（海伦公式）"></a>3. 计算三角形面积（海伦公式）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">double</span> a, b, c;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lf %lf %lf&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">    <span class="type">double</span> p = (a + b + c) / <span class="number">2</span>;</span><br><span class="line">    <span class="type">double</span> s = <span class="built_in">sqrt</span>(p * (p - a) * (p - b) * (p - c));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, s);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-带余除法"><a href="#4-带余除法" class="headerlink" title="4. 带余除法"></a>4. 带余除法</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a, b;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, a / b, a % b);   <span class="comment">// 商 余数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-计算并联电阻"><a href="#5-计算并联电阻" class="headerlink" title="5. 计算并联电阻"></a>5. 计算并联电阻</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">double</span> r1, r2;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lf %lf&quot;</span>, &amp;r1, &amp;r2);</span><br><span class="line">    <span class="type">double</span> r = <span class="number">1</span> / (<span class="number">1</span> / r1 + <span class="number">1</span> / r2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, r);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-数字反转（取位技巧）"><a href="#6-数字反转（取位技巧）" class="headerlink" title="6. 数字反转（取位技巧）"></a>6. 数字反转（取位技巧）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d%d%d\n&quot;</span>, n % <span class="number">10</span>, n / <span class="number">10</span> % <span class="number">10</span>, n / <span class="number">100</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-买图书（小数-取整）"><a href="#7-买图书（小数-取整）" class="headerlink" title="7. 买图书（小数 + 取整）"></a>7. 买图书（小数 + 取整）</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> n, m;          <span class="comment">// n 元钱，买 m 本书</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="type">double</span> price = m * <span class="number">1.0</span> / n;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, price);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-计算浮点数相除的余数"><a href="#8-计算浮点数相除的余数" class="headerlink" title="8. 计算浮点数相除的余数"></a>8. 计算浮点数相除的余数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">double</span> a, b;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lf %lf&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%g\n&quot;</span>, <span class="built_in">fmod</span>(a, b));   <span class="comment">// 浮点取余用 fmod</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十、解题套路小结"><a href="#十、解题套路小结" class="headerlink" title="十、解题套路小结"></a>十、解题套路小结</h2><p>拿到题目按这个顺序走：</p>
+<ol>
+<li><strong>看清输入格式</strong> —— 几个数？什么类型？空格还是逗号分隔？</li>
+<li><strong>选对变量类型</strong> —— 整数用 <code>int</code>，超大用 <code>long long</code>，小数一律 <code>double</code></li>
+<li><strong>看清输出格式</strong> —— 保留几位小数？要不要换行？有没有多余空格？</li>
+<li><strong>注意整数除法</strong> —— 要求小数结果时一定 <code>* 1.0</code></li>
+<li><strong>不要输出提示语</strong> —— OJ 只认结果</li>
+</ol>
+<p><strong>编译运行命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -o <span class="built_in">test</span>        <span class="comment"># 编译</span></span><br><span class="line">./test                    <span class="comment"># 运行</span></span><br><span class="line">gcc -Wall test.c -o <span class="built_in">test</span>  <span class="comment"># 打开所有警告（推荐）</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>这篇覆盖的就是「编程基础」这一块的全部核心。刷完这部分，下一步是<strong>分支结构（if &#x2F; switch）</strong>和<strong>循环结构（for &#x2F; while）</strong>，到时候再写第二篇。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mfkk217.github.io">MFKK</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mfkk217.github.io/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">https://mfkk217.github.io/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mfkk217.github.io" target="_blank">MFKK的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/">编程入门</a><a class="post-meta__tags" href="/tags/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/">刷题笔记</a></div><div class="post-share"><div class="social-share" data-image="/img/cover.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/21/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">MFKK</div><div class="author-info-description">计算机学生的学习笔记</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/MFKK217"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/MFKK217" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">🌿 欢迎来到我的小站，这里记录编程学习的点点滴滴～</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">一、第一个程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">2.</span> <span class="toc-text">二、数据类型与存储空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">常用类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-sizeof-%E6%9F%A5%E7%9C%8B%E5%8D%A0%E5%87%A0%E4%B8%AA%E5%AD%97%E8%8A%82"><span class="toc-number">2.2.</span> <span class="toc-text">用 sizeof 查看占几个字节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E5%80%BC%E8%8C%83%E5%9B%B4"><span class="toc-number">2.3.</span> <span class="toc-text">取值范围</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%B5%8B%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text">三、变量定义与赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">3.2.</span> <span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F"><span class="toc-number">3.3.</span> <span class="toc-text">交换两个变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%EF%BC%88%E9%9A%90%E5%BC%8F%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">自动转换（隐式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2%EF%BC%88%E6%98%BE%E5%BC%8F%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">强制转换（显式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97"><span class="toc-number">4.3.</span> <span class="toc-text">取余运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-number">5.</span> <span class="toc-text">五、输入与输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#printf-%E8%BE%93%E5%87%BA"><span class="toc-number">5.1.</span> <span class="toc-text">printf 输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scanf-%E8%BE%93%E5%85%A5"><span class="toc-number">5.2.</span> <span class="toc-text">scanf 输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E7%AC%A6%E5%AF%B9%E7%85%A7%E8%AE%B0%E5%BF%86"><span class="toc-number">5.3.</span> <span class="toc-text">格式符对照记忆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1%E8%AF%BB%E5%A4%9A%E4%B8%AA%E5%80%BC"><span class="toc-number">5.4.</span> <span class="toc-text">一次读多个值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">5.5.</span> <span class="toc-text">字符输入输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%EF%BC%88OJ-%E9%AB%98%E9%A2%91%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、格式化输出（OJ 高频）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E4%BD%8D%E6%95%B0"><span class="toc-number">6.1.</span> <span class="toc-text">保留小数位数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%AE%BD%E5%BA%A6%E4%B8%8E%E5%AF%B9%E9%BD%90"><span class="toc-number">6.2.</span> <span class="toc-text">控制宽度与对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C"><span class="toc-number">6.3.</span> <span class="toc-text">换行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%A2%98%EF%BC%9A%E5%AF%B9%E9%BD%90%E8%BE%93%E5%87%BA"><span class="toc-number">6.4.</span> <span class="toc-text">经典题：对齐输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">七、算术表达式与顺序执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">7.1.</span> <span class="toc-text">运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%A2%9E%E8%87%AA%E5%87%8F"><span class="toc-number">7.2.</span> <span class="toc-text">自增自减</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-number">7.3.</span> <span class="toc-text">顺序执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%EF%BC%88%E9%9C%80-%EF%BC%89"><span class="toc-number">7.4.</span> <span class="toc-text">常用数学函数（需 &lt;math.h&gt;）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%96%B0%E6%89%8B%E6%9C%80%E5%B8%B8%E8%B8%A9%E7%9A%84-8-%E4%B8%AA%E5%9D%91"><span class="toc-number">8.</span> <span class="toc-text">八、新手最常踩的 8 个坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E7%BB%8F%E5%85%B8%E5%85%A5%E9%97%A8%E9%A2%98%E9%80%9F%E5%88%B7"><span class="toc-number">9.</span> <span class="toc-text">九、经典入门题速刷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-A-B-%E9%97%AE%E9%A2%98"><span class="toc-number">9.1.</span> <span class="toc-text">1. A + B 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B8%A9%E5%BA%A6%E8%BD%AC%E6%8D%A2%EF%BC%88%E6%91%84%E6%B0%8F-%E2%86%92-%E5%8D%8E%E6%B0%8F%EF%BC%89"><span class="toc-number">9.2.</span> <span class="toc-text">2. 温度转换（摄氏 → 华氏）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97%E4%B8%89%E8%A7%92%E5%BD%A2%E9%9D%A2%E7%A7%AF%EF%BC%88%E6%B5%B7%E4%BC%A6%E5%85%AC%E5%BC%8F%EF%BC%89"><span class="toc-number">9.3.</span> <span class="toc-text">3. 计算三角形面积（海伦公式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B8%A6%E4%BD%99%E9%99%A4%E6%B3%95"><span class="toc-number">9.4.</span> <span class="toc-text">4. 带余除法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AE%A1%E7%AE%97%E5%B9%B6%E8%81%94%E7%94%B5%E9%98%BB"><span class="toc-number">9.5.</span> <span class="toc-text">5. 计算并联电阻</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%95%B0%E5%AD%97%E5%8F%8D%E8%BD%AC%EF%BC%88%E5%8F%96%E4%BD%8D%E6%8A%80%E5%B7%A7%EF%BC%89"><span class="toc-number">9.6.</span> <span class="toc-text">6. 数字反转（取位技巧）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%B9%B0%E5%9B%BE%E4%B9%A6%EF%BC%88%E5%B0%8F%E6%95%B0-%E5%8F%96%E6%95%B4%EF%BC%89"><span class="toc-number">9.7.</span> <span class="toc-text">7. 买图书（小数 + 取整）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%AE%A1%E7%AE%97%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9B%B8%E9%99%A4%E7%9A%84%E4%BD%99%E6%95%B0"><span class="toc-number">9.8.</span> <span class="toc-text">8. 计算浮点数相除的余数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E8%A7%A3%E9%A2%98%E5%A5%97%E8%B7%AF%E5%B0%8F%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">十、解题套路小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C语言基础语法"><img src="/img/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言基础语法"/></a><div class="content"><a class="title" href="/2026/10/26/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C语言基础语法">C语言基础语法</a><time datetime="2026-10-26T02:00:00.000Z" title="发表于 2026-10-26 10:00:00">2026-10-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/21/hello-world/" title="Hello World">Hello World</a><time datetime="2026-10-21T03:58:05.783Z" title="发表于 2026-10-21 11:58:05">2026-10-21</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By MFKK</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章（支持中文）..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
